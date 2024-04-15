@@ -1,0 +1,79 @@
+from graphics import *
+v=[]
+while True:
+    while True:
+        while True:
+            try:
+                pass_value=int(input("Please enter your credits at pass :"))
+                if pass_value>120 or pass_value<0 or pass_value%20!=0:
+                    print("Out of Range")
+                    continue
+                else:
+                    break
+            except ValueError:
+                print("Integer Required")
+
+        while True:
+            try:
+                defer_value=int(input("Please enter your credits at defer :"))
+                if defer_value>120 or defer_value<0 or defer_value%20!=0:
+                    print("Out of Range")
+                    continue
+                else:
+                    break
+            except ValueError:
+                print("Integer Required")
+
+        while True:
+            try:
+                fail_value=int(input("Please enter your credis at fail : "))
+                if fail_value>120 or fail_value<0 or fail_value%20!=0:
+                    print("out of range")
+                    continue
+                else:
+                    break
+            except ValueError:
+                print("Integer Required")
+
+        total=fail_value+pass_value+defer_value
+        values=((pass_value,defer_value,fail_value))
+        if total<=120 or pass_value%20!=0 or defer_value%20!=0 or fail_value%20!=0 or 0>=pass_value>=120 or\
+            0>=defer_value>=120 or 0>=fail_value>=120:
+            v.extend(values)
+
+                    #uda tyna v variable ekata demme oka
+
+
+
+        if total == 120:
+            break
+        else:
+            print("Total incorrect")
+
+    if fail_value>=80:
+        print("Exclude")
+
+    elif pass_value==120:
+        print("Progress")
+
+    elif pass_value==100:
+        print("Progress(Module trailer")
+
+    elif 60<=pass_value+defer_value<=120:
+        print("Do not progress-module retriever")
+
+    while True:
+        print("Would you like to enter another set of data?")
+        u = input("Enter 'y' for yes or 'q' to quit and view results:")
+        if u == "y":
+            break
+        elif u == "q":
+            for i in v:
+                print(v)
+        else:
+            print("Please enter'y' or 'q' ")
+
+
+
+
+

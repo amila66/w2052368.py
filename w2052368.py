@@ -1,0 +1,249 @@
+#I declare that my work contains no examples of misconduct, such as plagiarism, or collusion.
+#Any code taken from other sources is referenced within my code solution
+#student id: 20234000 #UoW no: w2052368
+#Date: 27.11.2023
+
+from graphics import *
+from os.path import join, abspath
+
+def save_results_to_file(outcomes, filename="results.txt"):
+
+    folder_path=r"D:\corse work iit"             # my save path
+    file_path=abspath(join(folder_path,filename))
+
+    with open(file_path,"w") as file:          #open the file in write mode and write outcomes
+        file.write("Results:\n")
+        for outcome, values, enter_count in outcomes:
+            file.write\
+                (f"{outcome}-{values}\n")
+
+
+
+def draw_histogram(outcomes):
+    win=GraphWin("Student Outcomes Histogram",400,300)   #create a graphical window
+    win.setBackground("white")
+
+    #no.of counts entered
+    outcome_counts={"Exclude":0,"Progress":0,"Module Trailer":0,"Retriever":0}
+    enter_counts={"Exclude":0,"Progress":0,"Module Trailer":0,"Retriever":0}
+
+    for outcome, _,enter_count in outcomes:           #aluth count update karanwa
+        outcome_counts[outcome] += 1
+        enter_counts[outcome]+=enter_count
+
+    max_count=max(outcome_counts.values())   # to get the maximum count
+
+    bar_width=80      #histogram bars
+    bar_spacing=10
+    x_start=30
+    y_start=250
+
+    for outcome,count in outcome_counts.items():
+        bar_height=(count/max_count)*200
+        rectangle=Rectangle(Point(x_start,y_start),Point(x_start+bar_width,y_start-bar_height))   #rectangle bars
+        rectangle.setFill("blue")
+        rectangle.draw(win)
+
+        #display no.of times enter_count occures
+        label = Text(Point(x_start + bar_width / 2, y_start -bar_height- 10),f"{enter_counts[outcome]}")
+        label.setSize(10)
+        label.draw(win)
+
+        # display no.of times outcomes occures
+        label=Text(Point(x_start+bar_width/2,y_start +10),f"{outcome}")
+        label.setSize(12)
+        label.draw(win)
+
+        x_start+=bar_width+bar_spacing  #moving to the next position for next bar
+
+    win.getMouse()     #click and close the window by mouse click
+    win.close()
+while True:
+    outcomes=[]   #empty list
+    print("Please choose an option given below :")
+    print("1:Student Version")
+    print("2:Staff Version")
+    choice=input("Enter your choice(1 or 2): ")
+#Student version
+    if choice=="1":
+            while True:
+                module_trailer = 0  #Initialize the trailor count
+                enter_count = 0     #Initialize the enter count
+
+                #inner loop for value entering(pass,fail,defer)
+                while True:
+                    while True:
+                        try:
+                            pass_value = int(input("Please enter your credits at pass: "))
+                            if pass_value > 120 or pass_value < 0 or pass_value % 20 != 0:
+                                print("Out of Range")
+                                continue
+                            else:
+                                break
+                        except ValueError:
+                            print("Integer Required")
+
+                    while True:
+                        try:
+                            defer_value = int(input("Please enter your credits at defer: "))
+                            if defer_value > 120 or defer_value < 0 or defer_value % 20 != 0:
+                                print("Out of Range")
+                                continue
+                            else:
+                                break
+                        except ValueError:
+                            print("Integer Required")
+
+                    while True:
+                        try:
+                            fail_value = int(input("Please enter your credits at fail: "))
+                            if fail_value > 120 or fail_value < 0 or fail_value % 20 != 0:
+                                print("Out of Range")
+                                continue
+                            else:
+                                break
+                        except ValueError:
+                            print("Integer Required")
+
+                    total = fail_value + pass_value + defer_value  #calculate total
+
+                    values = (pass_value, defer_value, fail_value) #store values in a tuple
+
+                    if total <= 120 or pass_value % 20 != 0 or defer_value % 20 != 0 or fail_value % 20 != 0 or \
+                            0 >= pass_value >= 120 or 0 >= defer_value >= 120 or 0 >= fail_value >= 120:
+                        enter_count += 1                           #increment the values
+
+                    if total == 120:
+                        break
+                    else:
+                        print("Total incorrect")
+
+                #Check outcomes based on credit values and update outcomes list
+                if fail_value >= 80:
+                    print("Exclude")
+                    outcomes.append(("Exclude", values, enter_count))
+                elif pass_value == 120:
+                    print("Progress")
+                    outcomes.append(("Progress", values, enter_count))
+                elif pass_value == 100:
+                    module_trailer = module_trailer + 1
+                    print("Progress(Module trailer)")
+                    outcomes.append(("Module Trailer", values, enter_count))
+                elif 60 <= pass_value + defer_value <= 120:
+                    print("Do not progress-module retriever")
+                    outcomes.append(("Retriever", values, enter_count))
+                break
+            break
+
+    #Staff version
+    elif choice=="2":
+        while True:
+            module_trailer = 0  # Initialize the trailor count
+            enter_count = 0  # Initialize the enter count
+
+            # inner loop for value entering(pass,fail,defer)
+            while True:
+                while True:
+                    try:
+                        pass_value = int(input("Please enter your credits at pass: "))
+                        if pass_value > 120 or pass_value < 0 or pass_value % 20 != 0:
+                            print("Out of Range")
+                            continue
+                        else:
+                            break
+                    except ValueError:
+                        print("Integer Required")
+
+                while True:
+                    try:
+                        defer_value = int(input("Please enter your credits at defer: "))
+                        if defer_value > 120 or defer_value < 0 or defer_value % 20 != 0:
+                            print("Out of Range")
+                            continue
+                        else:
+                            break
+                    except ValueError:
+                        print("Integer Required")
+
+                while True:
+                    try:
+                        fail_value = int(input("Please enter your credits at fail: "))
+                        if fail_value > 120 or fail_value < 0 or fail_value % 20 != 0:
+                            print("Out of Range")
+                            continue
+                        else:
+                            break
+                    except ValueError:
+                        print("Integer Required")
+
+                total = fail_value + pass_value + defer_value  # calculate total
+
+                values = (pass_value, defer_value, fail_value)  # store values in a tuple
+
+                if total <= 120 or pass_value % 20 != 0 or defer_value % 20 != 0 or fail_value % 20 != 0 or \
+                        0 >= pass_value >= 120 or 0 >= defer_value >= 120 or 0 >= fail_value >= 120:
+                    enter_count += 1  # increment the values
+
+                if total == 120:
+                    break
+                else:
+                    print("Total incorrect")
+
+            # Check outcomes based on credit values and update outcomes list
+            if fail_value >= 80:
+                print("Exclude")
+                outcomes.append(("Exclude", values, enter_count))
+            elif pass_value == 120:
+                print("Progress")
+                outcomes.append(("Progress", values, enter_count))
+            elif pass_value == 100:
+                module_trailer = module_trailer + 1
+                print("Progress(Module trailer)")
+                outcomes.append(("Module Trailer", values, enter_count))
+            elif 60 <= pass_value + defer_value <= 120:
+                print("Do not progress-module retriever")
+                outcomes.append(("Retriever", values, enter_count))
+
+            # Inner loop for user input to continue entering data or quit
+            while True:
+                print("Would you like to enter another set of data?")
+                u = input("Enter 'y' for yes or 'q' to quit and view results:")
+                if u == "y":
+                    break
+                elif u == "q":
+                    print("Results:")
+                    for outcome, values, enter_count in outcomes:
+                        print(f"{outcome} - {values}  ")
+                    save_results_to_file(outcomes)
+                    draw_histogram(outcomes)
+                    break
+                else:
+                    print("Enter 'y' or 'q'")
+
+
+    else:
+        print("Invalid choice.Please enter 1 or 2 ")
+        continue    #restart loop for new input
+
+
+
+
+
+
+
+
+'''References
+
+https://www.w3schools.com/python/python_file_write.asp
+https://www.w3schools.com/python/python_file_handling.asp
+https://stackoverflow.com/questions/56381066/how-to-open-a-file-in-both-read-and-append-mode-at-the-same-time-in-one-variable/56381383#56381383
+Friend's help
+
+
+
+
+
+'''
+
+
+

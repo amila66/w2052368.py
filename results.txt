@@ -1,0 +1,5 @@
+Results:
+Progress-(120, 0, 0)
+Retriever-(80, 20, 20)
+Retriever-(80, 20, 20)
+Exclude-(20, 20, 80)
